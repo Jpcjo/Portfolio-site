@@ -10,18 +10,17 @@ const About = () => {
         <article>
           <SectionTitle text="why hire fay?" />
           <p className="text-slate-600 mt-8 leading-loose">
-            Fay earned her BS in Mechanical Engineering , and MS in Interior
-            Design. She since has been working as a corporate designer within
-            numerous companies globally, and subsequently become a freelance
-            designer. However, her dedication towards learning hasn't simply
-            stopped there.
+            Fay holds a BS in Mechanical Engineering and an MS in Interior
+            Design. Following a successful career as a corporate designer in
+            global companies, she transitioned to freelance design. Despite her
+            accomplished background, Fay's commitment to learning persists.
           </p>
           <p className="text-slate-600 mt-8 leading-loose">
-            She is a self-taught web developer, has laid hands on various
-            projects since early 2023 and is loving it! Her keen senses for
-            design, equipped interpersonal skills and methodical problem-solving
-            approaches subject her to be one of the best-suited junior
-            candidates for your company.
+            As a self-taught web developer, Fay has immersed herself in diverse
+            projects since early 2023, thoroughly enjoying the experience. Her
+            acute design instincts, strong interpersonal skills, and systematic
+            problem-solving make her one of the best junior candidate for your
+            company.
           </p>
         </article>
       </div>

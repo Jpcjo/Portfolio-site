@@ -1,7 +1,6 @@
 import React from "react";
 import heroImg from "../assets/hero6.svg";
 import { FaGithubSquare, FaLinkedinIn, FaTwitterSquare } from "react-icons/fa";
-
 import { AiTwotoneMail } from "react-icons/ai";
 
 const Hero = () => {
@@ -22,8 +21,8 @@ const Hero = () => {
             Creative Problem Solver. Design strategist.
           </p>
 
-          <p className="mt-2 text-lg text-w capitalize tracking-wide font-medium text-slate-500">
-            who turns abstract ideas into interactive practices.
+          <p className="mt-2 text-lg text-w tracking-wide font-medium text-slate-500">
+            Who crafts seamless experiences, one line of code at a time.
           </p>
           <div className="flex gap-x-4 mt-4 ">
             <a href="https://github.com/Jpcjo" target="_blank">

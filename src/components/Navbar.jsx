@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { links } from "../data";
 import { SiAltiumdesigner } from "react-icons/si";
 import { RxHamburgerMenu } from "react-icons/rx";
@@ -13,22 +13,26 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   useEffect(() => {
-    // Check screen size and hide/show the navbar
-    const handleResize = () => {
-      if (window.innerWidth <= 1024) {
-        setIsMenuShown(true);
-      } else {
-        setIsMenuShown(false);
+    // Add a click event listener to the document to close the menu when clicking outside
+    const handleClickOutside = (event) => {
+      const menu = document.getElementById("dropdown-menu");
+
+      if (menu && !menu.contains(event.target)) {
+        setIsMenuOpen(false);
       }
     };
 
-    // Add a resize event listener
-    window.addEventListener("resize", handleResize);
+    // Add the click event listener
+    document.addEventListener("click", handleClickOutside);
 
+    // Cleanup the event listener
     return () => {
-      // Clean up the event listener
-      window.removeEventListener("resize", handleResize);
+      document.removeEventListener("click", handleClickOutside);
     };
   }, []);
 
@@ -55,26 +59,17 @@ const Navbar = () => {
       const currentScrollY = window.scrollY;
 
       if (currentScrollY > lastScrollY && currentScrollY > scrollThreshold) {
-        //currentScrollY > lastScrollY  is checking whether is scrolling down.
-        // If yes, hide the navbar
-        //If currentScrollY is greater than lastScrollY, user is scrolling down.
-        //If currentScrollY is less than lastScrollY, user is scrolling up.
-        //If the current scroll position is greater (i.e., lower on the page) than the last scroll position, it means the user is scrolling downward.
         setIsHidden(true);
       } else {
-        // Scrolling up, show the navbar
         setIsHidden(false);
       }
 
       lastScrollY = currentScrollY;
     };
-    //After making this comparison, lastScrollY is updated to match currentScrollY at the end of the handleScroll function, so it now stores the previous scroll position for the next scroll event.
 
     window.addEventListener("scroll", handleScroll);
-    // to invoke handleScroll function
 
     return () => {
-      // Clean up the event listener
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
@@ -86,9 +81,8 @@ const Navbar = () => {
       }  min-w-full `}
     >
       <div
-        className="align-element py-4 flex flex-col
-                   sm:flex-row justify-between sm:gap-x-16 sm:items-center sm:py-6 md:px-20"
-        // align-element is repeated style. see index.css
+        className="align-element py-4 flex  
+                    flex-row justify-between sm:gap-x-16 sm:items-center sm:py-6 md:px-20"
       >
         <div
           className="hover:translate-x-5 hover:scale-105 duration-300"
@@ -109,43 +103,55 @@ const Navbar = () => {
           </a>
         </div>
 
-        {isMenuShown ? (
-          <div className="hamburger-menu">
-            <button
-              onClick={toggleMenu}
-              className="hover:scale-110 duration-300 border border-gray-400 rounded-lg p-1"
+        <div className="hamburger-menu relative lg:hidden" id="dropdown-menu">
+          <button
+            onClick={toggleMenu}
+            className="hover:scale-110 duration-300 border border-gray-400 rounded-lg p-1"
+          >
+            <RxHamburgerMenu className="w-8 h-8" />
+          </button>
+          {isMenuOpen && (
+            <ul
+              className="menu-items absolute bg-white top-9 right-0 mt-2 
+                           shadow-lg rounded-xl overflow-hidden w-[140px] p-3 border-1"
+              onClick={() => closeMenu()}
             >
-              <RxHamburgerMenu className="w-8 h-8" />
-            </button>
-            {isMenuOpen && (
-              <ul className="menu-items">{/* Your menu items go here */}</ul>
-            )}
-          </div>
-        ) : (
-          <div className="hidden lg:block">
-            <div className="flex gap-x-3 ">
-              {links.map((link) => {
-                const { id, href, text } = link;
-                const color =
-                  text === "home" ? "text-violet-600" : "text-black";
-                const hoverColor =
-                  text === "home"
-                    ? "hover:text-black hover:font-bold"
-                    : " hover:text-violet-500";
-                return (
+              {links.map((link) => (
+                <li key={link.id}>
                   <a
-                    key={id}
-                    href={href}
-                    className={`capitalize text-lg tracking-wide font-medium ${color}
-                           ${hoverColor} hover:underline hover:scale-110 duration-300`}
+                    href={link.href}
+                    className="block p-2 rounded-lg text-black hover:bg-gray-200 hover:duration-300 "
                   >
-                    {text}
+                    {link.text}
                   </a>
-                );
-              })}
-            </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        <div className="hidden lg:block">
+          <div className="flex gap-x-3 ">
+            {links.map((link) => {
+              const { id, href, text } = link;
+              const color = text === "home" ? "text-violet-600" : "text-black";
+              const hoverColor =
+                text === "home"
+                  ? "hover:text-black hover:font-bold"
+                  : " hover:text-violet-500";
+              return (
+                <a
+                  key={id}
+                  href={href}
+                  className={`capitalize text-lg tracking-wide font-medium ${color}
+                           ${hoverColor} hover:underline hover:scale-110 duration-300`}
+                >
+                  {text}
+                </a>
+              );
+            })}
           </div>
-        )}
+        </div>
       </div>
     </nav>
   );
