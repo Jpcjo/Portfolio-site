@@ -95,7 +95,7 @@ const Navbar = () => {
           >
             <h2 className="text-3xl font-bold">
               <SiAltiumdesigner className="h-8 w-8 inline-block" />
-              {hovered ? "GoBack" : "FWU"}
+              {hovered ? "BackTo " : "FWU"}
               <span className="text-violet-600 hover:text-slate-400 duration-300">
                 {hovered ? "Home." : "Design."}
               </span>

@@ -12,7 +12,7 @@ const Projects = () => {
       id="projects"
     >
       <SectionTile text="Web Projects" />
-      <div className="py-16 grid  md:grid-cols-2 gap-8">
+      <div className="py-16 grid  md:grid-cols-2 gap-12 ">
         {projects.map((project) => {
           return <ProjectsCard key={project.id} {...project} />;
         })}
